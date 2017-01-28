@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "chip8.h"
 
 unsigned char chip8_fontset[80] = {
@@ -19,7 +21,7 @@ unsigned char chip8_fontset[80] = {
     0xF0, 0x80, 0xF0, 0x80, 0x80  //F
 };
 
-void init(){
+void CHIP8_Init(){
     pc = 0x200;
     opcode = 0;
     i = 0;
@@ -41,4 +43,8 @@ void init(){
     // Load the fontset
     for(j = 0; j < 80; j++)
         MEM[j] = chip8_fontset[j];
+}
+
+void CHIP8_EmulateCycle(){
+
 }

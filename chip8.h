@@ -13,8 +13,8 @@ unsigned char sound_timer;
 unsigned short opcode;
 unsigned char key[16];
 
-void init();
+void CHIP8_Init();
 
-void emulateCycle();
+void CHIP8_EmulateCycle();
 
 #endif
