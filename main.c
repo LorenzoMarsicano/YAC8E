@@ -24,6 +24,12 @@ void initGraphics(){
         window = SDL_CreateWindow("YAC8E", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if(window == NULL)
             printf("Window could not be created: %s\n", SDL_GetError());
+        else{
+            screenSurface = SDL_GetWindowSurface(window);
+            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00));
+            SDL_UpdateWindowSurface(window);
+            SDL_Delay(2000);
+        }
 
     }
 }
