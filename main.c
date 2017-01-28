@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <SDL2.h>
+#include <SDL/SDL2.h>
 #include "chip8.h"
 
 const int SCREEN_HEIGHT = 64;
