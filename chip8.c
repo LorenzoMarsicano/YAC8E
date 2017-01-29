@@ -26,7 +26,7 @@ void CHIP8_Init(){
     opcode = 0;
     i = 0;
     sp = 0;
-
+    drawFlag = 0;
     int j;
     // Clear display
     for(j = 0; j < 64 * 32; j++)
@@ -45,6 +45,73 @@ void CHIP8_Init(){
         MEM[j] = chip8_fontset[j];
 }
 
-void CHIP8_EmulateCycle(){
+void CHIP8_LoadGame(unsigned char buffer[], int size){
+    for(int i = 0; i < size; i++){
+        MEM[i + 512] = buffer[i];
+    }
+}
 
+void CHIP8_EmulateCycle(){
+    // FETCH
+    opcode = MEM[pc] << 8 | MEM[pc + 1];
+
+    // DECODE
+    switch(opcode & 0xF000){
+        case 0x0000:
+            switch(opcode & 0x000F){
+                case 0x0000: // 0x0000 -> Clear the screen
+                    for(int i = 0; i < 64*32; i++)
+                        SCREEN[i] = 0x0;
+                    drawFlag = 1;
+                    pc += 2;
+                break;
+
+                case 0x000E: // 0x000E -> return from a subroutine
+                    pc = STACK[sp];
+                    sp--;
+                    pc += 2;
+                break;
+            }
+        break;
+
+        case 0x1000: //0x1NNN -> Jump to NNN
+            pc = opcode & 0x0FFF;
+        break;
+
+        case 0x2000: //0x2NNN -> Call subroutine at NNN
+            sp++;
+            STACK[sp] = pc;
+            pc = opcode & 0x0FFF;
+        break;
+
+        case 0x3000: //0x3XKK -> Skip next instruction if V[x] == kk
+            if(V[(opcode & 0x0F00) >> 8] == (opcode & 0x00FF)) pc += 4;
+            else pc += 2;
+        break;
+
+        case 0x4000: //0x4XKK -> Skip next instruction if V[x] != kk
+            if(V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF)) pc += 4;
+            else pc += 2;
+        break;
+
+        case 0x5000: //0x5XY0 -> Skip next instruction if V[X] == V[Y]
+            if(V[(opcode & 0x0F00) >> 8] == V[(opcode & 0x00F0) >> 4]) pc += 4;
+            else pc += 2;
+        break;
+
+        case 0x6000: //0x6XKK -> Set V[X] = KK
+            V[(opcode & 0x0F00) >> 8] = (opcode & 0x00FF);
+            pc += 2;
+        break;
+
+    }
+
+    // Timers
+    if(delay_timer > 0)
+        --delay_timer;
+    if(sound_timer > 0){
+        if(sound_timer == 1)
+            printf("BEEP\a\n");
+        --sound_timer;
+    }
 }

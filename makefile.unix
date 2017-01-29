@@ -6,4 +6,4 @@ OBJ_NAME = chip8
 
 #This is the target that compiles our executable
 all : $(OBJS)
-	gcc $(OBJS) -o $(OBJ_NAME)
+	gcc $(OBJS) -w -lSDL2 -o $(OBJ_NAME) -Wall -g

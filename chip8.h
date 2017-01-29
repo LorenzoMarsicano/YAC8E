@@ -12,9 +12,12 @@ unsigned char delay_timer;
 unsigned char sound_timer;
 unsigned short opcode;
 unsigned char key[16];
+unsigned int drawFlag;
 
 void CHIP8_Init();
 
 void CHIP8_EmulateCycle();
+
+void CHIP8_LoadGame(unsigned char[], int size);
 
 #endif
