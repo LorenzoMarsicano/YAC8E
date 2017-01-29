@@ -2,7 +2,7 @@
 OBJS = src/chip8.c src/main.c
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = chip8
+OBJ_NAME = chip8.o
 
 #This is the target that compiles our executable
 all : $(OBJS)

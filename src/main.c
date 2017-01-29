@@ -8,8 +8,7 @@
 
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 64
-#define true 1
-#define false 0
+
 
 SDL_Window *window = NULL;
 SDL_Surface *screenSurface = NULL;
@@ -19,19 +18,30 @@ int display_height;
 int display_width;
 
 void initGraphics();
+void drawGraphics();
 
-int main(int arg, char **args){
-    int quit = false;
+int main(int argc, char **args){
+    int quit = 0;
 
-    CHIP8_Init();
+    if(argc < 2){
+        printf("No ROM selected.\nUsage: %s [application name]\n", args[0]);
+        return 0;
+    }
+
+    if(!CHIP8_LoadGame(args[1]))
+        return 0;
+
     initGraphics();
     SDL_Event e;
 
     while(!quit){
         CHIP8_EmulateCycle();
-        while(SDL_PollEvent(&e) != 0)
+        while(SDL_PollEvent(&e) != 0){
             if(e.type == SDL_QUIT)
-                quit = true;
+                quit = 1;
+        }
+        if(drawFlag)
+            drawGraphics();
     }
 
     return 0;
@@ -53,4 +63,8 @@ void initGraphics(){
         }
 
     }
+}
+
+void drawGraphics(){
+
 }

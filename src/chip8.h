@@ -3,6 +3,7 @@
 
 unsigned char MEM[4096];
 unsigned char V[16];
+unsigned char KEY[16];
 unsigned short i;
 unsigned short pc;
 unsigned char sp;
@@ -18,6 +19,6 @@ void CHIP8_Init();
 
 void CHIP8_EmulateCycle();
 
-void CHIP8_LoadGame(unsigned char[], int size);
+int CHIP8_LoadGame(const char filename[]);
 
 #endif
