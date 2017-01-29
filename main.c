@@ -1,5 +1,9 @@
 #include <stdio.h>
-#include <SDL/SDL2.h>
+#ifdef _WIN32
+    #include <SDL.h>
+#elif _unix
+    #include <SDL/SDL2.h>
+#endif
 #include "chip8.h"
 
 const int SCREEN_HEIGHT = 64;
@@ -11,6 +15,7 @@ SDL_Surface *screenSurface = NULL;
 void initGraphics();
 
 int main(int arg, char **args){
+    initGraphics();
 
     CHIP8_Init();
 

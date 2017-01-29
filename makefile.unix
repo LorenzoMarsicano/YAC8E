@@ -1,0 +1,9 @@
+#OBJS specifies which files to compile as part of the project
+OBJS = chip8.c main.c
+
+#OBJ_NAME specifies the name of our exectuable
+OBJ_NAME = chip8
+
+#This is the target that compiles our executable
+all : $(OBJS)
+	gcc $(OBJS) -o $(OBJ_NAME)
