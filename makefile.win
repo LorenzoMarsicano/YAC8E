@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = chip8.c main.c
+OBJS = src/chip8.c src/main.c
 
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = chip8
