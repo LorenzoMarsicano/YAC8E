@@ -10,6 +10,6 @@ As a learning experience I'm trying to make [chip8](http://devernay.free.fr/hack
 * **On Windows**: Install minGw and add the bin folder to your path, download [MinGw dev-library of SDL](https://www.libsdl.org/download-2.0.php) and extract them in C:\mingw_dev_libs (or anywhere you want, just remember to edit makefile.win), then run 
     make win
 
-## Precombiled Binaries
+## Precompiled Binaries
 
 //TODO
