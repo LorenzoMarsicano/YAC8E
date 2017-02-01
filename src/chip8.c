@@ -238,8 +238,9 @@ void CHIP8_EmulateCycle(){
                         pixel = MEM[i + yline];
                         for(int xline = 0; xline < 8; xline++){
                             if(pixel & (0x80 >> xline) != 0){
-                                if(SCREEN[x + xline + ((y + yline) * 64)] == 1)
+                                if(SCREEN[(x + xline + ((y + yline) * 64)) % (64*32)] == 1){
                                     V[0xF] = 1;
+                                }
                             }
                         }
                     }
@@ -278,6 +279,7 @@ void CHIP8_EmulateCycle(){
                                     keyPressed = 1;
                                 }
                             }
+                            printf("KeyPressed:%d\n", keyPressed);
                             if(keyPressed == 0) return;
                             pc += 2;
                         }
