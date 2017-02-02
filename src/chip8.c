@@ -96,7 +96,7 @@ void CHIP8_EmulateCycle(){
     // FETCH
     if(pc < 4095){
         opcode = MEM[pc] << 8 | MEM[pc + 1];
-        printf("The actual opcode is: 0x%04x\n", opcode);
+        //printf("The actual opcode is: 0x%04x\n", opcode);
         // DECODE
         switch(opcode & 0xF000){
             case 0x0000:
@@ -274,13 +274,13 @@ void CHIP8_EmulateCycle(){
                         {
                             int keyPressed = 0;
                             for(int j = 0; j < 16; j++){
-                                if(KEY[i] != 0){
-                                    V[(opcode & 0x0F00) >> 8] = i;
+                                if(KEY[j] != 0){
+                                    V[(opcode & 0x0F00) >> 8] = j;
                                     keyPressed = 1;
                                 }
                             }
-                            printf("KeyPressed:%d\n", keyPressed);
                             if(keyPressed == 0) return;
+                            else printf("KeyPressed:%d\n", keyPressed);
                             pc += 2;
                         }
                     break;

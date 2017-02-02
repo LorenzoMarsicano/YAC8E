@@ -79,7 +79,7 @@ void handleInput(){
                     KEY[0x2] = 1;
                 break;
                 case SDLK_3:
-                    KEY[0x3] = 3;
+                    KEY[0x3] = 1;
                 break;
                 case SDLK_4:
                     KEY[0xc] = 1;
