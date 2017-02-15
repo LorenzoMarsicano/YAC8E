@@ -28,7 +28,7 @@ void CHIP8_Init(){
     opcode = 0;
     i = 0;
     sp = 0;
-    drawFlag = 0;
+    chip8_drawFlag = 0;
     int j;
     // Clear display
     for(j = 0; j < 64 * 32; j++)
@@ -104,7 +104,8 @@ void CHIP8_EmulateCycle(){
                     case 0x0000: // 0x0000 -> Clear the screen
                         for(int i = 0; i < 64*32; i++)
                             SCREEN[i] = 0x0;
-                        drawFlag = 1;
+                        printf("REDRAW!\n");
+                        chip8_drawFlag = 1;
                         pc += 2;
                     break;
 
@@ -241,10 +242,11 @@ void CHIP8_EmulateCycle(){
                                 if(SCREEN[(x + xline + ((y + yline) * 64)) % (64*32)] == 1){
                                     V[0xF] = 1;
                                 }
+                                SCREEN[x + xline + ((y + yline) * 64)] ^= 1;
                             }
                         }
                     }
-                    drawFlag = 1;
+                    chip8_drawFlag = 1;
                     pc += 2;
                 }
             break;

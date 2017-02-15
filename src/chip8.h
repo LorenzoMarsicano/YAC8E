@@ -13,7 +13,7 @@ unsigned char delay_timer;
 unsigned char sound_timer;
 unsigned short opcode;
 unsigned char key[16];
-unsigned int drawFlag;
+unsigned int chip8_drawFlag;
 
 void CHIP8_Init();
 

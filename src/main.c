@@ -13,9 +13,10 @@
 SDL_Window *window = NULL;
 SDL_Surface *screenSurface = NULL;
 SDL_Renderer *renderer = NULL;
+SDL_Texture * texture = NULL;
 SDL_Event e;
 
-int modifier = 10;
+int modifier = 1;
 int display_height;
 int display_width;
 int quit;
@@ -41,10 +42,15 @@ int main(int argc, char **args){
         CHIP8_EmulateCycle();
         handleInput();
 
-        if(drawFlag)
+        if(chip8_drawFlag){
             drawGraphics();
+            SDL_RenderPresent(renderer);
+        }
     }
-
+    SDL_DestroyWindow(window);
+    SDL_DestroyTexture(texture);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
     return 0;
 }
 
@@ -186,5 +192,37 @@ void handleInput(){
 }
 
 void drawGraphics(){
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, display_width, display_height);
 
+   if (!texture){
+       printf("Texture error: %s\n", SDL_GetError());
+       return NULL;
+   }
+   if (SDL_SetRenderTarget(renderer, texture) != 0){
+       printf("SDL error: %s\n", SDL_GetError());
+       return NULL;
+   }
+
+   int i = 0;
+   for (int x = 0; x < display_width; ++x)
+   {
+       for (int y = 0; y < display_height; y++)
+       {
+           if (SCREEN[i]== 0){
+               SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+           }
+           else if (SCREEN[i] == 1){
+               SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+           }
+           SDL_RenderDrawPoint(renderer, x, y);
+           ++i;
+       }
+   }
+   SDL_SetRenderTarget(renderer, NULL);
+   SDL_Rect texture_rect;
+   texture_rect.x = 0;
+   texture_rect.y = 0;
+   texture_rect.w = 64;
+   texture_rect.h = 32;
+   SDL_RenderCopy(renderer,texture,NULL, &texture_rect);
 }
