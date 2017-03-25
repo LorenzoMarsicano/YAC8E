@@ -9,7 +9,6 @@
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 64
 
-
 SDL_Window *window = NULL;
 SDL_Surface *screenSurface = NULL;
 SDL_Renderer *renderer = NULL;
@@ -208,14 +207,14 @@ void drawGraphics(){
    {
        for (int y = 0; y < display_height; y++)
        {
-           if (SCREEN[i]== 0){
+           if (SCREEN[i] == 0){
                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
            }
            else if (SCREEN[i] == 1){
                SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
            }
            SDL_RenderDrawPoint(renderer, x, y);
-           ++i;
+           i++;
        }
    }
    SDL_SetRenderTarget(renderer, NULL);
